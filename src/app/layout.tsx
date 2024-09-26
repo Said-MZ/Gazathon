@@ -26,7 +26,7 @@ export default async function RootLayout({
   const session = await auth();
   return (
     <html lang="en">
-      <body className={cn("antialiased", poppins.variable)}>
+      <body className={cn("antialiased overflow-x-hidden", poppins.variable)}>
         <SessionProvider session={session}>
           <ThemeProvider
             attribute="class"
