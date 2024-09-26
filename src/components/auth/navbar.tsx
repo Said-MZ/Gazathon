@@ -163,7 +163,7 @@ const Navbar: React.FC = () => {
       <div className="container relative mx-auto min-h-20 flex items-center justify-between p-2">
         {/* Logo */}
         <div className="flex items-center">
-          <Link href="/dashboard">
+          <Link href="/">
             <Image
               src="/logo-horizontal.png"
               alt="logo"
