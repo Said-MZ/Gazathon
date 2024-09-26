@@ -11,7 +11,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { MoveRight, PhoneCall } from "lucide-react";
+import { ArrowRight, MoveRight, PhoneCall } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -40,26 +40,46 @@ const navigationItems: NavigationItem[] = [
     description: "",
   },
   {
-    title: "Products",
-    description: "We offer a wide range of products for your business.",
+    title: "Doctors",
+    description: "We seek to provide the best care for patients in gaza.",
     items: [
-      { title: "All Products", href: "/products" },
-      { title: "Electronic Products", href: "/electronic-products" },
-      { title: "Smart City Solutions", href: "/smart-city-solutions" },
-      { title: "LED Display", href: "/led-display" },
-      { title: "Cladding Art", href: "/cladding-art" },
-      { title: "Building Facade Lighting", href: "/building-facade-lighting" },
-      { title: "Customized Solutions", href: "/customized-solutions" },
+      { title: "All Doctors", href: "/doctors" },
+      { title: "Pediatricians", href: "/doctors/pediatricians" },
+      { title: "Surgeons", href: "/doctors/surgeons" },
+      { title: "Dentists", href: "/doctors/dentists" },
+      { title: "Cardiologists", href: "/doctors/cardiologists" },
+      { title: "Dermatologists", href: "/doctors/dermatologists" },
+      { title: "Endocrinologists", href: "/doctors/endocrinologists" },
+      { title: "Gastroenterologists", href: "/doctors/gastroenterologists" },
+      { title: "Hematologists", href: "/doctors/hematologists" },
     ],
   },
   {
-    title: "Services",
-    description: "We offer a wide range of services for your business.",
+    title: "Patients",
+    description: "Book an appointment with one of our doctors.",
     items: [
-      { title: "All Services", href: "/services" },
-      { title: "Installation", href: "/installation" },
-      { title: "Maintenance", href: "/maintenance" },
+      { title: "Book an Appointment", href: "/book-appointment" },
+      { title: "Book a Call", href: "/book-call" },
+      { title: "Book a Consultation", href: "/book-consultation" },
       { title: "Support", href: "/support" },
+    ],
+  },
+  {
+    title: "Contact",
+    description: "We are open to any questions you may have.",
+    items: [
+      { title: "Phone", href: "/contact/phone" },
+      { title: "Email", href: "/contact/email" },
+      { title: "Support", href: "/support" },
+    ],
+  },
+  {
+    title: "Donate",
+    description: "Help us provide the best care for patients in gaza.",
+    items: [
+      { title: "Donate", href: "/donate" },
+      { title: "Donate to a specific doctor", href: "/donate/doctor" },
+      { title: "Donate to a specific doctor", href: "/donate/doctor" },
     ],
   },
 ];
@@ -243,8 +263,8 @@ const Navbar: React.FC = () => {
         {/* CTA Button */}
         <div className="hidden lg:flex items-center">
           <Button variant="default" className="gap-4">
-            <PhoneCall className="w-4 h-4" />
-            Contact us
+            <ArrowRight className="w-4 h-4" />
+            Get Started
           </Button>
         </div>
 
