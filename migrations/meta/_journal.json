@@ -8,6 +8,13 @@
       "when": 1727362255079,
       "tag": "0000_worried_sheva_callister",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1727371567658,
+      "tag": "0001_curly_starfox",
+      "breakpoints": true
     }
   ]
 }
