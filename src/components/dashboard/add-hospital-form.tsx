@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { submitHospital } from "@/actions/dashboard/submit-hospital";
+import { toast } from "sonner";
 
 const hospitalSchema = z.object({
   name: z.string().min(1, "Hospital name is required"),
@@ -50,9 +51,9 @@ export function AddHospitalForm() {
     try {
       await submitHospital(data);
       form.reset();
-      // Show success message or redirect
+      toast.success("Hospital added successfully");
     } catch (error) {
-      setSubmitError("Failed to submit hospital. Please try again.");
+      toast.error("Failed to submit hospital. Please try again.");
     } finally {
       setIsSubmitting(false);
     }

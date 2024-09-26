@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
+import { Button } from "../ui/button";
 
 // Define the Hospital type
 export interface Hospital {
@@ -56,18 +57,11 @@ const HospitalsClient = () => {
                 <TableCell>{hospital.address}</TableCell>
                 <TableCell>{hospital.phone}</TableCell>
                 <TableCell>
-                  <Link
-                    href={`/dashboard/hospitals/${hospital.id}`}
-                    className="btn btn-sm btn-secondary mr-2"
-                  >
-                    View
-                  </Link>
-                  <Link
-                    href={`/dashboard/hospitals/${hospital.id}/edit`}
-                    className="btn btn-sm btn-secondary"
-                  >
-                    Edit
-                  </Link>
+                  <Button asChild>
+                    <Link href={`/dashboard/hospitals/${hospital.id}/edit`}>
+                      Edit
+                    </Link>
+                  </Button>
                 </TableCell>
               </TableRow>
             )

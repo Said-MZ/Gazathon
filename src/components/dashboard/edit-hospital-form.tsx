@@ -20,6 +20,7 @@ import {
   updateHospital,
   fetchHospital,
 } from "@/actions/dashboard/manage-hospitals";
+import { toast } from "sonner";
 
 const hospitalSchema = z.object({
   id: z.string(),
@@ -88,9 +89,9 @@ export function EditHospitalForm({ hospitalId }: EditHospitalFormProps) {
           ? data.specialties.split(",").map((s) => s.trim())
           : [],
       });
-      // Show success message or redirect
+      toast.success("Hospital updated successfully");
     } catch (error) {
-      setError("Failed to update hospital. Please try again.");
+      toast.error("Failed to update hospital. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
