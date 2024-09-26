@@ -25,6 +25,12 @@ export const requestStatusEnum = pgEnum("request_status", [
   "fulfilled",
 ]);
 
+export const hospitalStatusEnum = pgEnum("hospital_status", [
+  "pending",
+  "approved",
+  "rejected",
+]);
+
 // Users
 export const users = pgTable("user", {
   id: text("id")
@@ -152,6 +158,8 @@ export const Hospital = pgTable("hospital", {
   email: text("email").notNull(),
   capacity: integer("capacity"),
   specialties: text("specialties").array(),
+  status: hospitalStatusEnum("status").default("pending"),
+  submittedBy: text("submitted_by"),
   createdAt: timestamp("created_at", { mode: "date" }).default(sql`now()`),
   updatedAt: timestamp("updated_at", { mode: "date" }).default(sql`now()`),
 });

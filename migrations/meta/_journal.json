@@ -15,6 +15,13 @@
       "when": 1727371567658,
       "tag": "0001_curly_starfox",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1727378846793,
+      "tag": "0002_funny_gorilla_man",
+      "breakpoints": true
     }
   ]
 }
