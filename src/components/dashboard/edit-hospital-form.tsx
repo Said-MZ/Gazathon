@@ -21,6 +21,7 @@ import {
   fetchHospital,
 } from "@/actions/dashboard/manage-hospitals";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const hospitalSchema = z.object({
   id: z.string(),
@@ -42,6 +43,8 @@ export function EditHospitalForm({ hospitalId }: EditHospitalFormProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const router = useRouter();
 
   const form = useForm<HospitalFormValues>({
     resolver: zodResolver(hospitalSchema),
@@ -185,9 +188,14 @@ export function EditHospitalForm({ hospitalId }: EditHospitalFormProps) {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Updating..." : "Update Hospital"}
-        </Button>
+        <div className="flex gap-2">
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Updating..." : "Update Hospital"}
+          </Button>
+          <Button variant="outline" type="button" onClick={() => router.back()}>
+            Cancel
+          </Button>
+        </div>
       </form>
     </Form>
   );
