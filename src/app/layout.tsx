@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Poppins } from "next/font/google";
+import { ThemeProvider } from "@/components/providers/theme-provider";
+import { ModeToggle } from "@/components/ui/mode-toggle";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -21,7 +23,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn("antialiased", poppins.variable)}>{children}</body>
+      <body className={cn("antialiased", poppins.variable)}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ModeToggle />
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
