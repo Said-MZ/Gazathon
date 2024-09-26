@@ -3,7 +3,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Poppins } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import { ModeToggle } from "@/components/ui/mode-toggle";
+import Navbar from "@/components/global/navbar";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -30,7 +30,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ModeToggle />
+          <Navbar />
           {children}
         </ThemeProvider>
       </body>
