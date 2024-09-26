@@ -40,7 +40,7 @@ const HospitalsClient = () => {
   }, []);
 
   const role = useCurrentRole();
-  const isAdmin = role === "ADMIN";
+  const isAdmin = role === "admin";
 
   return (
     <Table>

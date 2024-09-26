@@ -31,7 +31,7 @@ const DashboardClient = () => {
 
   if (!dashboardData) return <Spinner />;
 
-  const isAdmin = user?.role === "ADMIN"; // Assuming 'ADMIN' is the role for admins
+  const isAdmin = user?.role === "admin"; // Assuming 'ADMIN' is the role for admins
 
   return (
     <div>
@@ -58,17 +58,6 @@ const DashboardClient = () => {
           editLink="/dashboard/stock-alerts"
         />
       </div>
-      {isAdmin && (
-        <div className="mt-8">
-          <h3 className="text-xl font-semibold mb-4">Admin Actions</h3>
-          <Button asChild className="mr-4">
-            <Link href="/dashboard/hospitals/add">Add Hospital</Link>
-          </Button>
-          <Button asChild>
-            <Link href="/dashboard/medicines/add">Add Medicine</Link>
-          </Button>
-        </div>
-      )}
     </div>
   );
 };
