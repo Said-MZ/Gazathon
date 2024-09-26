@@ -11,10 +11,11 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { ArrowRight, MoveRight, PhoneCall } from "lucide-react";
+import { MoveRight, LogOut, User } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import UserBtn from "./user-button";
 
 type SubItem = {
   title: string;
@@ -30,56 +31,17 @@ type NavigationItem = {
 
 const navigationItems: NavigationItem[] = [
   {
-    title: "Home",
-    href: "/",
-    description: "",
+    title: "Dashboard",
+    href: "/dashboard",
+    description: "Your personal overview",
   },
   {
-    title: "About",
-    href: "/about",
-    description: "",
-  },
-  {
-    title: "Doctors",
-    description: "We seek to provide the best care for patients in gaza.",
+    title: "Appointments",
+    description: "Manage your medical appointments",
     items: [
-      { title: "All Doctors", href: "/doctors" },
-      { title: "Pediatricians", href: "/doctors/pediatricians" },
-      { title: "Surgeons", href: "/doctors/surgeons" },
-      { title: "Dentists", href: "/doctors/dentists" },
-      { title: "Cardiologists", href: "/doctors/cardiologists" },
-      { title: "Dermatologists", href: "/doctors/dermatologists" },
-      { title: "Endocrinologists", href: "/doctors/endocrinologists" },
-      { title: "Gastroenterologists", href: "/doctors/gastroenterologists" },
-      { title: "Hematologists", href: "/doctors/hematologists" },
-    ],
-  },
-  {
-    title: "Patients",
-    description: "Book an appointment with one of our doctors.",
-    items: [
-      { title: "Book an Appointment", href: "/book-appointment" },
-      { title: "Book a Call", href: "/book-call" },
-      { title: "Book a Consultation", href: "/book-consultation" },
-      { title: "Support", href: "/support" },
-    ],
-  },
-  {
-    title: "Contact",
-    description: "We are open to any questions you may have.",
-    items: [
-      { title: "Phone", href: "/contact/phone" },
-      { title: "Email", href: "/contact/email" },
-      { title: "Support", href: "/support" },
-    ],
-  },
-  {
-    title: "Donate",
-    description: "Help us provide the best care for patients in gaza.",
-    items: [
-      { title: "Donate", href: "/donate" },
-      { title: "Donate to a specific doctor", href: "/donate/doctor" },
-      { title: "Donate to a specific doctor", href: "/donate/doctor" },
+      { title: "Upcoming", href: "/appointments/upcoming" },
+      { title: "Past", href: "/appointments/past" },
+      { title: "Book New", href: "/appointments/book" },
     ],
   },
 ];
@@ -199,7 +161,7 @@ const Navbar: React.FC = () => {
       <div className="container relative mx-auto min-h-20 flex items-center justify-between p-2">
         {/* Logo */}
         <div className="flex items-center">
-          <Link href="/">
+          <Link href="/dashboard">
             <Image
               src="/logo-horizontal.png"
               alt="logo"
@@ -234,9 +196,6 @@ const Navbar: React.FC = () => {
                                 {item.description}
                               </p>
                             </div>
-                            <Button size="sm" className="mt-10">
-                              Book a call today
-                            </Button>
                           </div>
                           <div className="flex flex-col text-sm h-full justify-end">
                             {item.items?.map((subItem) => (
@@ -260,13 +219,8 @@ const Navbar: React.FC = () => {
           </NavigationMenu>
         </div>
 
-        {/* CTA Button */}
-        <div className="hidden lg:flex items-center">
-          <Button variant="default" className="gap-4">
-            <ArrowRight className="w-4 h-4" />
-            Get Started
-          </Button>
-        </div>
+        {/* User Menu */}
+        <UserBtn />
 
         {/* Mobile Menu Toggle */}
         <div className="lg:hidden">
@@ -316,6 +270,23 @@ const Navbar: React.FC = () => {
                   </div>
                 </motion.div>
               ))}
+              {/* Mobile User Menu */}
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: navigationItems.length * 0.1 }}
+              >
+                <div className="flex flex-col gap-2 mt-4">
+                  <p className="text-lg flex items-center gap-2">
+                    <User className="w-4 h-4" />
+                    John Doe
+                  </p>
+                  <Button variant="ghost" className="justify-start px-4">
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Logout
+                  </Button>
+                </div>
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>

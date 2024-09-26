@@ -3,7 +3,6 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Poppins } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import Navbar from "@/components/global/navbar";
 import { auth } from "../../auth";
 import { Toaster } from "sonner";
 import { SessionProvider } from "next-auth/react";
@@ -37,7 +36,6 @@ export default async function RootLayout({
           >
             <div className="absolute top-0 z-[-2] h-screen w-screen bg-background bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(146,227,169,0.3),rgba(255,255,255,0))]"></div>
             <Toaster richColors />
-            <Navbar />
             {children}
           </ThemeProvider>
         </SessionProvider>
