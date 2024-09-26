@@ -164,13 +164,16 @@ const Navbar: React.FC = () => {
         {/* Logo */}
         <div className="flex items-center">
           <Link href="/">
-            <Image
+            {/* <Image
               src="/logo-horizontal.png"
               alt="logo"
               width={180}
               height={50}
               className="py-2"
-            />
+            /> */}
+            <h2 className="text-2xl font-bold">
+              Medi<span className="text-primary">Find</span>
+            </h2>
           </Link>
         </div>
 

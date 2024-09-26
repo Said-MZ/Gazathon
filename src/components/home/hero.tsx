@@ -22,7 +22,7 @@ const Hero = () => {
               transition={{ delay: 0.3 }}
               className="text-5xl md:text-7xl max-w-2xl tracking-tighter text-center lg:text-left font-regular"
             >
-              Welcome to Gaza Medical Center
+              Welcome to Medi<span className="text-primary">Find</span>
             </motion.h1>
 
             <motion.p
@@ -66,9 +66,9 @@ const Hero = () => {
           >
             <motion.div
               className="w-full h-full bg-transparent border-transparent"
-              animate={{ 
+              animate={{
                 rotate: [0, 1, 0, -1, 0],
-                y: [0, 2, 0, -2, 0]
+                y: [0, 2, 0, -2, 0],
               }}
               transition={{
                 repeat: Infinity,

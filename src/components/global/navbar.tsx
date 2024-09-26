@@ -200,13 +200,16 @@ const Navbar: React.FC = () => {
         {/* Logo */}
         <div className="flex items-center">
           <Link href="/">
-            <Image
+            {/* <Image
               src="/logo-horizontal.png"
               alt="logo"
               width={180}
               height={50}
               className="py-2"
-            />
+            /> */}
+            <h2 className="text-2xl font-bold">
+              Medi<span className="text-primary">Find</span>
+            </h2>
           </Link>
         </div>
 
@@ -262,9 +265,11 @@ const Navbar: React.FC = () => {
 
         {/* CTA Button */}
         <div className="hidden lg:flex items-center">
-          <Button variant="default" className="gap-4">
-            <ArrowRight className="w-4 h-4" />
-            Get Started
+          <Button variant="default" className="gap-4" asChild>
+            <Link href="/dashboard">
+              <ArrowRight className="w-4 h-4" />
+              Get Started
+            </Link>
           </Button>
         </div>
 

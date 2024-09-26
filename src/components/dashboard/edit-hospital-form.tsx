@@ -22,6 +22,7 @@ import {
 } from "@/actions/dashboard/manage-hospitals";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import Spinner from "../ui/spinner";
 
 const hospitalSchema = z.object({
   id: z.string(),
@@ -100,7 +101,7 @@ export function EditHospitalForm({ hospitalId }: EditHospitalFormProps) {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Spinner />;
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (

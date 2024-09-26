@@ -13,6 +13,7 @@ type DashboardData = {
   totalHospitals: number;
   totalMedicines: number;
   lowStockAlerts: number;
+  unapprovedHospitals: number;
 };
 
 const DashboardClient = () => {
@@ -38,13 +39,23 @@ const DashboardClient = () => {
       <h2 className="text-2xl font-bold mb-6">
         {isAdmin ? "Admin Dashboard" : "Dashboard Overview"}
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <DashboardCard
           title="Total Hospitals"
           value={dashboardData.totalHospitals}
           isAdmin={isAdmin}
           editLink="/dashboard/hospitals"
         />
+
+        {isAdmin && (
+          <DashboardCard
+            title="Unapproved Hospitals"
+            value={dashboardData.unapprovedHospitals}
+            isAdmin={isAdmin}
+            editLink="/dashboard/admin/manage-hospitals"
+          />
+        )}
+
         <DashboardCard
           title="Total Medicines"
           value={dashboardData.totalMedicines}
