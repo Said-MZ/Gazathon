@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import useCurrentRole from "@/hooks/use-current-role";
 
 // Define the Hospital type
 export interface Hospital {
@@ -38,6 +39,9 @@ const HospitalsClient = () => {
     loadHospitals();
   }, []);
 
+  const role = useCurrentRole();
+  const isAdmin = role === "ADMIN";
+
   return (
     <Table>
       <TableHeader>
@@ -45,7 +49,6 @@ const HospitalsClient = () => {
           <TableHead>Name</TableHead>
           <TableHead>Address</TableHead>
           <TableHead>Phone</TableHead>
-          <TableHead>Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -57,11 +60,13 @@ const HospitalsClient = () => {
                 <TableCell>{hospital.address}</TableCell>
                 <TableCell>{hospital.phone}</TableCell>
                 <TableCell>
-                  <Button asChild>
-                    <Link href={`/dashboard/hospitals/${hospital.id}/edit`}>
-                      Edit
-                    </Link>
-                  </Button>
+                  {isAdmin && (
+                    <Button asChild>
+                      <Link href={`/dashboard/hospitals/${hospital.id}/edit`}>
+                        Edit
+                      </Link>
+                    </Button>
+                  )}
                 </TableCell>
               </TableRow>
             )

@@ -6,8 +6,7 @@ import HospitalsClient from "@/components/dashboard/hospitals-client";
 import MedicinesClient from "@/components/dashboard/medicines-client";
 
 export default async function DashboardPage() {
-  const role = await currentRole();
-  return role === "admin" ? (
+  return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-6 text-center">Dashboard</h1>
       <Suspense fallback={<Spinner />}>
@@ -23,13 +22,6 @@ export default async function DashboardPage() {
           <h2 className="text-xl font-bold mb-4">Medicines</h2>
           <MedicinesClient />
         </div>
-      </Suspense>
-    </div>
-  ) : (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
-      <Suspense fallback={<Spinner />}>
-        {/* //! TODO: Add dashboard for hospital */}
       </Suspense>
     </div>
   );
