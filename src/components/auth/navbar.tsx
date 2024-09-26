@@ -36,12 +36,14 @@ const navigationItems: NavigationItem[] = [
     description: "Your personal overview",
   },
   {
-    title: "Appointments",
+    title: "Hospitals",
     description: "Manage your medical appointments",
     items: [
-      { title: "Upcoming", href: "/appointments/upcoming" },
-      { title: "Past", href: "/appointments/past" },
-      { title: "Book New", href: "/appointments/book" },
+      { title: "Add Hospital", href: "/dashboard/admin/add-hospital" },
+      {
+        title: "Pending Hospitals",
+        href: "/dashboard/admin/pending-hospitals",
+      },
     ],
   },
 ];

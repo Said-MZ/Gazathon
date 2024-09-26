@@ -167,12 +167,8 @@
           "name": "medicine_hospital_id_hospital_id_fk",
           "tableFrom": "medicine",
           "tableTo": "hospital",
-          "columnsFrom": [
-            "hospital_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["hospital_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -248,12 +244,8 @@
           "name": "medicine_request_requesting_hospital_id_hospital_id_fk",
           "tableFrom": "medicine_request",
           "tableTo": "hospital",
-          "columnsFrom": [
-            "requesting_hospital_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["requesting_hospital_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -261,12 +253,8 @@
           "name": "medicine_request_providing_hospital_id_hospital_id_fk",
           "tableFrom": "medicine_request",
           "tableTo": "hospital",
-          "columnsFrom": [
-            "providing_hospital_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["providing_hospital_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -274,12 +262,8 @@
           "name": "medicine_request_medicine_id_medicine_id_fk",
           "tableFrom": "medicine_request",
           "tableTo": "medicine",
-          "columnsFrom": [
-            "medicine_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["medicine_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -317,9 +301,7 @@
         "permission_name_unique": {
           "name": "permission_name_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "name"
-          ]
+          "columns": ["name"]
         }
       }
     },
@@ -378,12 +360,8 @@
           "name": "transaction_medicine_id_medicine_id_fk",
           "tableFrom": "transaction",
           "tableTo": "medicine",
-          "columnsFrom": [
-            "medicine_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["medicine_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -391,12 +369,8 @@
           "name": "transaction_performed_by_user_id_fk",
           "tableFrom": "transaction",
           "tableTo": "user",
-          "columnsFrom": [
-            "performed_by"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["performed_by"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -427,12 +401,8 @@
           "name": "user_permission_user_id_user_id_fk",
           "tableFrom": "user_permission",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -440,12 +410,8 @@
           "name": "user_permission_permission_id_permission_id_fk",
           "tableFrom": "user_permission",
           "tableTo": "permission",
-          "columnsFrom": [
-            "permission_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["permission_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -453,10 +419,7 @@
       "compositePrimaryKeys": {
         "user_permission_user_id_permission_id_pk": {
           "name": "user_permission_user_id_permission_id_pk",
-          "columns": [
-            "user_id",
-            "permission_id"
-          ]
+          "columns": ["user_id", "permission_id"]
         }
       },
       "uniqueConstraints": {}
@@ -538,12 +501,8 @@
           "name": "account_userId_user_id_fk",
           "tableFrom": "account",
           "tableTo": "user",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["userId"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -551,10 +510,7 @@
       "compositePrimaryKeys": {
         "account_provider_providerAccountId_pk": {
           "name": "account_provider_providerAccountId_pk",
-          "columns": [
-            "provider",
-            "providerAccountId"
-          ]
+          "columns": ["provider", "providerAccountId"]
         }
       },
       "uniqueConstraints": {}
@@ -595,17 +551,12 @@
         "password_reset_token_token_unique": {
           "name": "password_reset_token_token_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "token"
-          ]
+          "columns": ["token"]
         },
         "unique_email_password_token": {
           "name": "unique_email_password_token",
           "nullsNotDistinct": false,
-          "columns": [
-            "email",
-            "token"
-          ]
+          "columns": ["email", "token"]
         }
       }
     },
@@ -632,12 +583,8 @@
           "name": "two_factor_confirmation_userId_user_id_fk",
           "tableFrom": "two_factor_confirmation",
           "tableTo": "user",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["userId"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -647,9 +594,7 @@
         "unique_user_two_factor_confirmation": {
           "name": "unique_user_two_factor_confirmation",
           "nullsNotDistinct": false,
-          "columns": [
-            "userId"
-          ]
+          "columns": ["userId"]
         }
       }
     },
@@ -689,17 +634,12 @@
         "two_factor_token_token_unique": {
           "name": "two_factor_token_token_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "token"
-          ]
+          "columns": ["token"]
         },
         "unique_email_two_factor_token": {
           "name": "unique_email_two_factor_token",
           "nullsNotDistinct": false,
-          "columns": [
-            "email",
-            "token"
-          ]
+          "columns": ["email", "token"]
         }
       }
     },
@@ -777,12 +717,8 @@
           "name": "user_hospital_id_hospital_id_fk",
           "tableFrom": "user",
           "tableTo": "hospital",
-          "columnsFrom": [
-            "hospital_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["hospital_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -792,9 +728,7 @@
         "user_email_unique": {
           "name": "user_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       }
     },
@@ -834,17 +768,12 @@
         "verification_token_token_unique": {
           "name": "verification_token_token_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "token"
-          ]
+          "columns": ["token"]
         },
         "unique_email_verification_token": {
           "name": "unique_email_verification_token",
           "nullsNotDistinct": false,
-          "columns": [
-            "email",
-            "token"
-          ]
+          "columns": ["email", "token"]
         }
       }
     }
@@ -853,28 +782,17 @@
     "public.request_status": {
       "name": "request_status",
       "schema": "public",
-      "values": [
-        "pending",
-        "approved",
-        "rejected",
-        "fulfilled"
-      ]
+      "values": ["pending", "approved", "rejected", "fulfilled"]
     },
     "public.transaction_type": {
       "name": "transaction_type",
       "schema": "public",
-      "values": [
-        "increase",
-        "decrease"
-      ]
+      "values": ["increase", "decrease"]
     },
     "public.user_role": {
       "name": "user_role",
       "schema": "public",
-      "values": [
-        "user",
-        "admin"
-      ]
+      "values": ["user", "admin"]
     }
   },
   "schemas": {},

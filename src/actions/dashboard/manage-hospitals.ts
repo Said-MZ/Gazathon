@@ -8,18 +8,18 @@ import { currentUser } from "../auth/current-user";
 
 export async function fetchPendingHospitals() {
   const user = await currentUser();
-//   if (!user || user.role !== "ADMIN") {
-//     throw new Error("Unauthorized");
-//   }
+  if (!user || user.role !== "admin") {
+    throw new Error("Unauthorized");
+  }
 
   return db.select().from(Hospital).where(eq(Hospital.status, "pending"));
 }
 
 export async function approveHospital(id: string) {
   const user = await currentUser();
-//   if (!user || user.role !== "ADMIN") {
-//     throw new Error("Unauthorized");
-//   }
+  if (!user || user.role !== "admin") {
+    throw new Error("Unauthorized");
+  }
 
   await db
     .update(Hospital)
@@ -29,9 +29,9 @@ export async function approveHospital(id: string) {
 
 export async function rejectHospital(id: string) {
   const user = await currentUser();
-//   if (!user || user.role !== "ADMIN") {
-//     throw new Error("Unauthorized");
-//   }
+  if (!user || user.role !== "admin") {
+    throw new Error("Unauthorized");
+  }
 
   await db
     .update(Hospital)

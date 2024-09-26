@@ -7,7 +7,7 @@ import MedicinesClient from "@/components/dashboard/medicines-client";
 
 export default async function DashboardPage() {
   const role = await currentRole();
-  return role !== "ADMIN" ? (
+  return role === "admin" ? (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-6 text-center">Dashboard</h1>
       <Suspense fallback={<Spinner />}>

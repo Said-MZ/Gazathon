@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
+import { getHospitalByMedecineId } from "@/actions/dashboard/get-hospital-by-medecine-id";
 
 // Define the Medicine type
 interface Medicine {
@@ -21,8 +22,27 @@ interface Medicine {
   expirationDate: string; // Assuming this is a string in ISO format
 }
 
+interface Hospital {
+  id: string;
+  name: string;
+  description: string | null;
+  genericName: string | null;
+  dosage: string | null;
+  form: string | null;
+  price: number;
+  stock: number;
+  minStock: number | null;
+  expirationDate: Date;
+  batchNumber: string | null;
+  createdAt: Date | null;
+  updatedAt: Date | null;
+  hospitalId: string;
+}
+[];
+
 const MedicinesClient = () => {
   const [medicines, setMedicines] = useState<Medicine[]>([]);
+  const [hospital, setHospital] = useState<Hospital[] | null>(null);
 
   useEffect(() => {
     const loadMedicines = async () => {
@@ -31,6 +51,8 @@ const MedicinesClient = () => {
         ...medicine,
         genericName: medicine.genericName || "",
       }));
+      const hospital = await getHospitalByMedecineId(data[0]?.id);
+      setHospital(hospital);
       setMedicines(formattedData);
     };
     loadMedicines();
@@ -40,6 +62,7 @@ const MedicinesClient = () => {
     <Table>
       <TableHeader>
         <TableRow>
+          <TableHead>Hospital</TableHead>
           <TableHead>Name</TableHead>
           <TableHead>Generic Name</TableHead>
           <TableHead>Stock</TableHead>
@@ -50,6 +73,7 @@ const MedicinesClient = () => {
       <TableBody>
         {medicines.map((medicine) => (
           <TableRow key={medicine.id}>
+            <TableCell>{hospital?.[0]?.name || "N/A"}</TableCell>
             <TableCell>{medicine.name}</TableCell>
             <TableCell>{medicine.genericName}</TableCell>
             <TableCell>{medicine.stock}</TableCell>
