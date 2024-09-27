@@ -10,7 +10,6 @@ import AdminGate from "@/components/auth/admin-gate";
 import FormError from "@/components/auth/form-error";
 
 const AdminPage = () => {
-  const role = useCurrentRole();
   const onServerActionClick = async () => {
     admin().then((res) => {
       if (res.error) {

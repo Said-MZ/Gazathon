@@ -25,7 +25,6 @@ import Spinner from "../ui/spinner";
 
 const LoginForm = () => {
   const searchParams = useSearchParams();
-  const callbackURL = searchParams.get("callbackURL");
   const urlError =
     searchParams.get("error") === "OAuthAccountNotLinked"
       ? "Email already used with other provider"

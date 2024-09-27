@@ -1,8 +1,5 @@
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
-import { Card, CardFooter, CardHeader } from "../ui/card";
-import BackButton from "./back-button";
 import CardWrapper from "./card-wrapper";
-import Header from "./header";
 
 const ErrorCard = () => {
   return (

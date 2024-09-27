@@ -49,7 +49,7 @@ export function MedicineSearch({ medicines }: MedicineSearchProps) {
         ? "Low"
         : "OK" && (
             <div className="fixed top-24 right-4">
-              <span className="bg-red-700 text-red-100 p-2 rounded-md flex items-center gap-2">
+              <span className="bg-red-700 text-red-200 p-2 rounded-md flex items-center gap-2">
                 <TriangleAlertIcon className="w-4 h-4" /> Low Stock
               </span>
             </div>

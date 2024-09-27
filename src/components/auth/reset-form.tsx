@@ -16,7 +16,7 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import FormError from "../ui/form-error";
+import FormError from "./form-error";
 import FormSuccess from "./form-success";
 import { reset } from "@/actions/auth/reset";
 
