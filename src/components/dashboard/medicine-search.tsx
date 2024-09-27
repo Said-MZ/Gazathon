@@ -9,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import Link from "next/link";
 
 type Medicine = {
   id: string;
@@ -20,10 +21,9 @@ type Medicine = {
 
 interface MedicineSearchProps {
   medicines: Medicine[];
-  onSelect: (medicine: Medicine) => void;
 }
 
-export function MedicineSearch({ medicines, onSelect }: MedicineSearchProps) {
+export function MedicineSearch({ medicines }: MedicineSearchProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm] = useDebounce(searchTerm, 300);
 
@@ -52,19 +52,21 @@ export function MedicineSearch({ medicines, onSelect }: MedicineSearchProps) {
             <TableHead>Generic Name</TableHead>
             <TableHead>Stock</TableHead>
             <TableHead>Expiration Date</TableHead>
+            <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {filteredMedicines.map((medicine) => (
-            <TableRow
-              key={medicine.id}
-              onClick={() => onSelect(medicine)}
-              className="cursor-pointer hover:bg-gray-100"
-            >
+            <TableRow key={medicine.id}>
               <TableCell>{medicine.name}</TableCell>
               <TableCell>{medicine.genericName}</TableCell>
               <TableCell>{medicine.stock}</TableCell>
               <TableCell>{medicine.expirationDate}</TableCell>
+              <TableCell>
+                <Link href={`/dashboard/edit-medicine/${medicine.id}`}>
+                  Edit
+                </Link>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

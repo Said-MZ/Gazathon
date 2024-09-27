@@ -32,13 +32,6 @@ const MedicinesClient = () => {
   const [medicines, setMedicines] = useState<Medicine[]>([]);
   const [hospital, setHospital] = useState<Hospital | null>(null);
 
-  const router = useRouter();
-
-  const handleMedicineSelect = (medicine: Medicine) => {
-    router.push(`/dashboard/edit-medicine/${medicine?.id}`);
-    console.log(medicine);
-  };
-
   useEffect(() => {
     const loadMedicines = async () => {
       const data = await fetchMedicines();
@@ -70,12 +63,6 @@ const MedicinesClient = () => {
           ...m,
           expirationDate: m.expirationDate.toISOString(),
         }))}
-        onSelect={(medicine) =>
-          handleMedicineSelect({
-            ...medicine,
-            expirationDate: new Date(medicine.expirationDate),
-          })
-        }
       />
     </div>
   );
