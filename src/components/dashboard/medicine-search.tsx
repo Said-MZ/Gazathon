@@ -61,7 +61,9 @@ export function MedicineSearch({ medicines }: MedicineSearchProps) {
               <TableCell>{medicine.name}</TableCell>
               <TableCell>{medicine.genericName}</TableCell>
               <TableCell>{medicine.stock}</TableCell>
-              <TableCell>{medicine.expirationDate}</TableCell>
+              <TableCell>
+                {new Date(medicine.expirationDate).toLocaleDateString()}
+              </TableCell>
               <TableCell>
                 <Link href={`/dashboard/edit-medicine/${medicine.id}`}>
                   Edit
