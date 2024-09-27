@@ -19,6 +19,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { fetchMedicines } from "@/actions/dashboard/fetch-medicine";
+import GeneralData from "./general-statics";
 
 export interface Medicine {
   id: string;
@@ -88,6 +89,12 @@ const CardsWrapper = () => {
   return (
     <section className="flex items-center justify-center w-full h-fit overflow-y-auto max-sm:mt-24">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 max-h-screen p-4">
+        {/* GeneralData component will now span full width of one grid column */}
+        <div className="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 xl:col-span-5">
+          <GeneralData />
+        </div>
+
+        {/* Map through hospitals and create cards */}
         {hospitals.map((hospital) => (
           <Card key={hospital.id} className="w-full">
             <CardHeader>
