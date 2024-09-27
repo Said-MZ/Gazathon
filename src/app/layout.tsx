@@ -4,8 +4,8 @@ import { cn } from "@/lib/utils";
 import { Poppins } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { auth } from "../../auth";
-import { Toaster } from "sonner";
 import { SessionProvider } from "next-auth/react";
+import { Toaster } from "@/components/ui/sonner";
 
 const poppins = Poppins({
   subsets: ["latin"],

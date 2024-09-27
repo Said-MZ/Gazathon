@@ -2,8 +2,9 @@
 "use server";
 
 import { db } from "@/db";
-import { Hospital } from "@/db/schema";
+import { Hospital, users } from "@/db/schema";
 import { currentUser } from "@/actions/auth/current-user";
+import { eq } from "drizzle-orm";
 
 interface HospitalSubmission {
   name: string;
@@ -21,12 +22,24 @@ export async function submitHospital(data: HospitalSubmission) {
   }
 
   // Insert the hospital with a pending status
-  await db.insert(Hospital).values({
-    ...data,
-    status: "pending",
-    submittedBy: user.id,
-    specialties: data.specialties
-      ? data.specialties.split(",").map((s) => s.trim())
-      : [],
-  });
+  const hospital = await db
+    .insert(Hospital)
+    .values({
+      ...data,
+      status: "pending",
+      submittedBy: user.id,
+      specialties: data.specialties
+        ? data.specialties.split(",").map((s) => s.trim())
+        : [],
+    })
+    .returning({
+      id: Hospital.id,
+    });
+
+  await db
+    .update(users)
+    .set({
+      hospitalId: hospital[0].id,
+    })
+    .where(eq(users.id, user.id));
 }
