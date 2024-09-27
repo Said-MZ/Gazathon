@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { fetchMedicines } from "@/actions/dashboard/fetch-medicine";
 import { getHospitalById } from "@/actions/dashboard/get-hospital-by-id";
 import { MedicineSearch } from "./medicine-search";
+import { useRouter } from "next/navigation";
 
 type Medicine = {
   id: string;
@@ -31,7 +32,10 @@ const MedicinesClient = () => {
   const [medicines, setMedicines] = useState<Medicine[]>([]);
   const [hospital, setHospital] = useState<Hospital | null>(null);
 
+  const router = useRouter();
+
   const handleMedicineSelect = (medicine: Medicine) => {
+    router.push(`/dashboard/edit-medicine/${medicine?.id}`);
     console.log(medicine);
   };
 

@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { auth } from "../../auth";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "@/components/ui/sonner";
+import { ModeToggle } from "@/components/ui/mode-toggle";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -30,13 +31,14 @@ export default async function RootLayout({
         <SessionProvider session={session}>
           <ThemeProvider
             attribute="class"
-            defaultTheme="system"
+            defaultTheme="light"
             enableSystem
             disableTransitionOnChange
           >
             <div className="absolute top-0 z-[-2] h-screen w-screen bg-background bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(146,227,169,0.3),rgba(255,255,255,0))]"></div>
             <Toaster richColors />
             {children}
+            <ModeToggle />
           </ThemeProvider>
         </SessionProvider>
       </body>
