@@ -82,7 +82,7 @@ const DashboardClient = () => {
               <Link href="/dashboard/hospitals/add">Add Hospital</Link>
             </Button>
             <Button asChild>
-              <Link href="/dashboard/medicines/add">Add Medicine</Link>
+              <Link href="/dashboard/add-medicine">Add Medicine</Link>
             </Button>
             <Button asChild variant="outline">
               <Link href="/dashboard/reports">Generate Reports</Link>

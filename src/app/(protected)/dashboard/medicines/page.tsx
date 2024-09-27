@@ -8,7 +8,7 @@ export default function MedicinesPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Medicines</h1>
-        <Link href="/dashboard/medicines/add" className="btn btn-primary">
+        <Link href="/dashboard/add-medicine" className="btn btn-primary">
           Add Medicine
         </Link>
       </div>

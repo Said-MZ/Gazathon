@@ -11,7 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
-import { getHospitalByMedecineId } from "@/actions/dashboard/get-hospital-by-medecine-id";
+import { getHospitalById } from "@/actions/dashboard/get-hospital-by-id";
 
 // Define the Medicine type
 interface Medicine {
@@ -23,22 +23,17 @@ interface Medicine {
 }
 
 interface Hospital {
-  id: string;
+  address: string;
   name: string;
-  description: string | null;
-  genericName: string | null;
-  dosage: string | null;
-  form: string | null;
-  price: number;
-  stock: number;
-  minStock: number | null;
-  expirationDate: Date;
-  batchNumber: string | null;
+  phone: string;
+  email: string;
+  capacity: number | null;
+  specialties: string[] | null;
+  status: "pending" | "approved" | "rejected" | null;
+  submittedBy: string | null;
   createdAt: Date | null;
   updatedAt: Date | null;
-  hospitalId: string;
 }
-[];
 
 const MedicinesClient = () => {
   const [medicines, setMedicines] = useState<Medicine[]>([]);
@@ -51,9 +46,9 @@ const MedicinesClient = () => {
         ...medicine,
         genericName: medicine.genericName || "",
       }));
-      const hospital = await getHospitalByMedecineId(data[0]?.id);
-      setHospital(hospital);
       setMedicines(formattedData);
+      const hospital = await getHospitalById(formattedData[0]?.hospitalId);
+      setHospital(hospital);
     };
     loadMedicines();
   }, []);
@@ -88,7 +83,7 @@ const MedicinesClient = () => {
                 View
               </Link>
               <Link
-                href={`/dashboard/medicines/${medicine.id}/edit`}
+                href={`/dashboard/edit-medicine/${medicine.id}`}
                 className="btn btn-sm btn-secondary"
               >
                 Edit

@@ -34,11 +34,9 @@ export default async function DashboardPage() {
         <div className="mb-6">
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-bold mb-4">Medicines</h2>
-            {isAdmin && (
-              <Button variant="outline" asChild>
-                <Link href="/dashboard/admin/add-medicine">Add Medicine</Link>
-              </Button>
-            )}
+            <Button variant="outline" asChild>
+              <Link href="/dashboard/add-medicine">Add Medicine</Link>
+            </Button>
           </div>
           <MedicinesClient />
         </div>

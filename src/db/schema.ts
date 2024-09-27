@@ -39,7 +39,7 @@ export const users = pgTable("user", {
   name: text("name"),
   email: text("email").unique(),
   emailVerified: timestamp("email_verified", { mode: "date" }),
-  image: text("image"),
+  image: text("image"),// remove this
   password: varchar("password"),
   role: userRolesEnum("role").default("user"),
   hospitalRole: text("hospital_role"),
