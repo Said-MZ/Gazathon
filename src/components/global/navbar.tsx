@@ -11,7 +11,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { ArrowRight, MoveRight, PhoneCall } from "lucide-react";
+import { ArrowRight, Heart, MoveRight, PhoneCall } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -40,46 +40,12 @@ const navigationItems: NavigationItem[] = [
     description: "",
   },
   {
-    title: "Doctors",
-    description: "We seek to provide the best care for patients in gaza.",
-    items: [
-      { title: "All Doctors", href: "/doctors" },
-      { title: "Pediatricians", href: "/doctors/pediatricians" },
-      { title: "Surgeons", href: "/doctors/surgeons" },
-      { title: "Dentists", href: "/doctors/dentists" },
-      { title: "Cardiologists", href: "/doctors/cardiologists" },
-      { title: "Dermatologists", href: "/doctors/dermatologists" },
-      { title: "Endocrinologists", href: "/doctors/endocrinologists" },
-      { title: "Gastroenterologists", href: "/doctors/gastroenterologists" },
-      { title: "Hematologists", href: "/doctors/hematologists" },
-    ],
-  },
-  {
-    title: "Patients",
-    description: "Book an appointment with one of our doctors.",
-    items: [
-      { title: "Book an Appointment", href: "/book-appointment" },
-      { title: "Book a Call", href: "/book-call" },
-      { title: "Book a Consultation", href: "/book-consultation" },
-      { title: "Support", href: "/support" },
-    ],
-  },
-  {
     title: "Contact",
     description: "We are open to any questions you may have.",
     items: [
       { title: "Phone", href: "/contact/phone" },
       { title: "Email", href: "/contact/email" },
       { title: "Support", href: "/support" },
-    ],
-  },
-  {
-    title: "Donate",
-    description: "Help us provide the best care for patients in gaza.",
-    items: [
-      { title: "Donate", href: "/donate" },
-      { title: "Donate to a specific doctor", href: "/donate/doctor" },
-      { title: "Donate to a specific doctor", href: "/donate/doctor" },
     ],
   },
 ];
@@ -264,7 +230,13 @@ const Navbar: React.FC = () => {
         </div>
 
         {/* CTA Button */}
-        <div className="hidden lg:flex items-center">
+        <div className="hidden lg:flex items-center gap-4">
+          <Button variant="outline" className="gap-4" asChild>
+            <Link href="/dashboard">
+              <Heart className="w-4 h-4 fill-red-500 text-black/20" />
+              Donate
+            </Link>
+          </Button>
           <Button variant="default" className="gap-4" asChild>
             <Link href="/dashboard">
               <ArrowRight className="w-4 h-4" />
