@@ -86,10 +86,10 @@ const CardsWrapper = () => {
   };
 
   return (
-    <section className="flex items-center justify-center w-full h-screen overflow-y-auto max-sm:mt-24 mb-16">
+    <section className="flex items-center justify-center w-full h-fit overflow-y-auto max-sm:mt-24">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 max-h-screen p-4">
         {hospitals.map((hospital) => (
-          <Card key={hospital.id} className="w-full mx-auto">
+          <Card key={hospital.id} className="w-full">
             <CardHeader>
               <CardTitle>{hospital.name}</CardTitle>
               <CardDescription>{hospital.address}</CardDescription>
