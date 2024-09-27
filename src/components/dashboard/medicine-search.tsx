@@ -53,6 +53,7 @@ export function MedicineSearch({ medicines }: MedicineSearchProps) {
             <TableHead>Stock</TableHead>
             <TableHead>Expiration Date</TableHead>
             <TableHead>Actions</TableHead>
+            <TableHead>Total</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -69,6 +70,8 @@ export function MedicineSearch({ medicines }: MedicineSearchProps) {
                   Edit
                 </Link>
               </TableCell>
+              {/* TODO: Add total */}
+              <TableCell>{medicine.stock * 100}</TableCell>
             </TableRow>
           ))}
         </TableBody>
