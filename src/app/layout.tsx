@@ -35,7 +35,7 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="absolute top-0 z-[-2] h-screen w-screen bg-background bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(146,227,169,0.3),rgba(255,255,255,0))]"></div>
+            <div className="absolute top-0 z-[-2] h-screen w-screen bg-background bg-[radial-gradient(ellipse_80%80%_at_50%-20%,rgba(146,227,169,0.3),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_80%80%_at_50%-20%,rgba(94,161,255,0.3),rgba(0,0,0,0))]"></div>{" "}
             <Toaster richColors />
             {children}
             <div className="fixed left-[0%] bottom-[0%]">

@@ -164,7 +164,7 @@ const Navbar: React.FC = () => {
     >
       <div className="container relative mx-auto min-h-20 flex items-center justify-between p-2">
         {/* Logo */}
-        <div className="flex items-center">
+        <div className="flex items-center w-[262.75px]">
           <Link href="/">
             {/* <Image
               src="/logo-horizontal.png"
@@ -174,7 +174,7 @@ const Navbar: React.FC = () => {
               className="py-2"
             /> */}
             <h2 className="text-2xl font-bold">
-              Medi<span className="text-primary">Find</span>
+              Gaza<span className="text-primary">Find</span>
             </h2>
           </Link>
         </div>

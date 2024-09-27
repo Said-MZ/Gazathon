@@ -40,19 +40,20 @@ const GeneralData = () => {
           <div className="p-4 bg-neutral-800 rounded-lg">
             <h3 className="text-white text-lg">Total Hospitals</h3>
             <p className="text-white text-2xl">
-              {dashboardData.totalHospitals}
+              {dashboardData.totalHospitals} out of 40
             </p>
           </div>
           <div className="p-4 bg-neutral-800 rounded-lg">
             <h3 className="text-white text-lg">Total Medicines</h3>
             <p className="text-white text-2xl">
-              {dashboardData.totalMedicines}
+              {dashboardData.totalMedicines} out of 1200
             </p>
           </div>
           <div className="p-4 bg-neutral-800 rounded-lg w-full col-span-2">
             <h3 className="text-white text-lg">Low Stock Alerts</h3>
             <p className="text-white text-2xl">
-              {dashboardData.lowStockAlerts}
+              {dashboardData.lowStockAlerts} in {dashboardData.totalMedicines}{" "}
+              medicines
             </p>
           </div>
         </CardContent>

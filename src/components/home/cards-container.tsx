@@ -96,7 +96,6 @@ const CardsWrapper = () => {
             </CardHeader>
             <CardContent>
               <p>Phone: {hospital.phone}</p>
-              <p>Status: {hospital.status || "N/A"}</p>
             </CardContent>
             <CardFooter>
               <Button onClick={() => handleMoreInfoClick(hospital)}>
