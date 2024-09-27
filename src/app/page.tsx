@@ -1,4 +1,5 @@
 import Navbar from "@/components/global/navbar";
+import CardsWrapper from "@/components/home/cards-container";
 import Hero from "@/components/home/hero";
 
 const HomePage = () => {
@@ -6,6 +7,7 @@ const HomePage = () => {
     <main>
       <Navbar />
       <Hero />
+      <CardsWrapper />
     </main>
   );
 };
