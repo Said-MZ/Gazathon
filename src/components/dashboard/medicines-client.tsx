@@ -16,6 +16,7 @@ type Medicine = {
   stock: number;
   expirationDate: Date;
   hospitalId: string;
+  minStock: number;
 };
 
 interface Hospital {
