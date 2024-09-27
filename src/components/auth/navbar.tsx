@@ -171,7 +171,7 @@ const Navbar: React.FC = () => {
               className="py-2"
             /> */}
             <h2 className="text-2xl font-bold">
-              Medi<span className="text-primary">Find</span>
+              Gaza<span className="text-primary">Find</span>
             </h2>
           </Link>
         </div>
