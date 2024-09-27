@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 import Spinner from "@/components/ui/spinner";
 import DashboardClient from "@/components/dashboard/dashboard-client";
 import { currentRole } from "@/actions/auth/current-user";
@@ -6,6 +6,14 @@ import HospitalsClient from "@/components/dashboard/hospitals-client";
 import MedicinesClient from "@/components/dashboard/medicines-client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Upload } from "lucide-react";
+
+const ImportCSVButton = () => (
+  <Button variant="outline" className="ml-2">
+    <Upload className="mr-2 h-4 w-4" />
+    Import CSV
+  </Button>
+);
 
 export default async function DashboardPage() {
   const role = await currentRole();
@@ -20,23 +28,27 @@ export default async function DashboardPage() {
           <DashboardClient />
         </div>
         <div className="mb-6">
-          <div className="flex justify-between items-center">
-            <h2 className="text-xl font-bold mb-4">Hospitals</h2>
-
-            {isAdmin && (
-              <Button variant="outline" asChild>
-                <Link href="/dashboard/admin/add-hospital">Add Hospital</Link>
-              </Button>
-            )}
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-bold">Hospitals</h2>
+            <div className="flex">
+              {isAdmin && (
+                <>
+                  <Button variant="outline" asChild>
+                    <Link href="/dashboard/admin/add-hospital">
+                      Add Hospital
+                    </Link>
+                  </Button>
+                </>
+              )}
+              <ImportCSVButton />
+            </div>
           </div>
           <HospitalsClient />
         </div>
         <div className="mb-6">
-          <div className="flex justify-between items-center">
-            <h2 className="text-xl font-bold mb-4">Medicines</h2>
-            <Button variant="outline" asChild>
-              <Link href="/dashboard/add-medicine">Add Medicine</Link>
-            </Button>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-bold">Medicines</h2>
+            {isAdmin && <ImportCSVButton />}
           </div>
           <MedicinesClient />
         </div>

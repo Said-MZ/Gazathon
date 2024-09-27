@@ -2,29 +2,27 @@
 
 import { useState, useEffect } from "react";
 import { fetchMedicines } from "@/actions/dashboard/fetch-medicine";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { fetchHospitals } from "@/actions/dashboard/fetch-hospitals";
+import { MedicineSearch } from "./medicine-search";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
-import { getHospitalById } from "@/actions/dashboard/get-hospital-by-id";
 
-// Define the Medicine type
-interface Medicine {
+type Medicine = {
   id: string;
   name: string;
   genericName: string;
   stock: number;
-  expirationDate: string; // Assuming this is a string in ISO format
-}
+  expirationDate: Date;
+  hospitalId: string;
+  minStock: number;
+};
 
 interface Hospital {
-  address: string;
+  id: string;
   name: string;
+  address: string;
   phone: string;
   email: string;
   capacity: number | null;
@@ -37,62 +35,54 @@ interface Hospital {
 
 const MedicinesClient = () => {
   const [medicines, setMedicines] = useState<Medicine[]>([]);
-  const [hospital, setHospital] = useState<Hospital[] | null>(null);
+  const [hospitals, setHospitals] = useState<Hospital[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
-    const loadMedicines = async () => {
-      const data = await fetchMedicines();
-      const formattedData = data.map((medicine: any) => ({
-        ...medicine,
-        genericName: medicine.genericName || "",
-      }));
-      setMedicines(formattedData);
-      const hospital = await getHospitalById(formattedData[0]?.hospitalId);
-      setHospital(hospital);
+    const loadData = async () => {
+      try {
+        const [medicinesData, hospitalsData] = await Promise.all([
+          fetchMedicines(),
+          fetchHospitals(),
+        ]);
+
+        const formattedMedicines = medicinesData.map((medicine: any) => ({
+          ...medicine,
+          genericName: medicine.genericName || "",
+          expirationDate: new Date(medicine.expirationDate),
+        }));
+
+        setMedicines(formattedMedicines);
+        setHospitals(hospitalsData);
+      } catch (error) {
+        console.error("Error loading data:", error);
+      }
     };
-    loadMedicines();
+    loadData();
   }, []);
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Hospital</TableHead>
-          <TableHead>Name</TableHead>
-          <TableHead>Generic Name</TableHead>
-          <TableHead>Stock</TableHead>
-          <TableHead>Expiration Date</TableHead>
-          <TableHead>Actions</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {medicines.map((medicine) => (
-          <TableRow key={medicine.id}>
-            <TableCell>{hospital?.[0]?.name || "N/A"}</TableCell>
-            <TableCell>{medicine.name}</TableCell>
-            <TableCell>{medicine.genericName}</TableCell>
-            <TableCell>{medicine.stock}</TableCell>
-            <TableCell>
-              {new Date(medicine.expirationDate).toLocaleDateString()}
-            </TableCell>
-            <TableCell>
-              <Link
-                href={`/dashboard/medicines/${medicine.id}`}
-                className="btn btn-sm btn-secondary mr-2"
-              >
-                View
-              </Link>
-              <Link
-                href={`/dashboard/edit-medicine/${medicine.id}`}
-                className="btn btn-sm btn-secondary"
-              >
-                Edit
-              </Link>
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <div className="container mx-auto py-8">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold text-primary">Medicines</h1>
+        <Button asChild>
+          <Link href="/dashboard/add-medicine">Add Medicine</Link>
+        </Button>
+      </div>
+      <Card className="bg-card text-card-foreground mb-6">
+        <CardHeader>
+          <CardTitle>Search Medicines</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <MedicineSearch
+            medicines={medicines.map((m) => ({
+              ...m,
+              expirationDate: m.expirationDate.toISOString(),
+            }))}
+          />
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 

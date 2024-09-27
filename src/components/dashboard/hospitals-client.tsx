@@ -49,6 +49,7 @@ const HospitalsClient = () => {
           <TableHead>Name</TableHead>
           <TableHead>Address</TableHead>
           <TableHead>Phone</TableHead>
+          <TableHead>Action</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -59,6 +60,14 @@ const HospitalsClient = () => {
                 <TableCell>{hospital.name}</TableCell>
                 <TableCell>{hospital.address}</TableCell>
                 <TableCell>{hospital.phone}</TableCell>
+                <TableCell>
+                  <Button asChild>
+                    <Link href={`/dashboard/hospitals/${hospital.id}`}>
+                      View
+                    </Link>
+                  </Button>
+                </TableCell>
+
                 <TableCell>
                   {isAdmin && (
                     <Button asChild>
