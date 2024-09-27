@@ -60,7 +60,7 @@ const MedicinesClient = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto py-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-primary">Medicines</h1>
         <Button asChild>
@@ -80,58 +80,6 @@ const MedicinesClient = () => {
           />
         </CardContent>
       </Card>
-      {medicines.length > 0 && (
-        <Card className="mt-6 bg-card text-card-foreground">
-          <CardHeader>
-            <CardTitle>Medicine List</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="divide-y divide-border">
-              {medicines.map((medicine) => (
-                <li key={medicine.id} className="py-4">
-                  <div className="flex justify-between">
-                    <div>
-                      <h3 className="text-lg font-medium text-primary">{medicine.name}</h3>
-                      <p className="text-sm text-muted-foreground">{medicine.genericName}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-secondary-foreground">Stock: {medicine.stock}</p>
-                      <p className="text-secondary-foreground">Expires: {formatDate(medicine.expirationDate)}</p>
-                    </div>
-                  </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="mt-2"
-                    onClick={() => router.push(`/dashboard/medicines/${medicine.id}`)}
-                  >
-                    View Details
-                  </Button>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      )}
-      {hospital && (
-        <Card className="mt-6 bg-card text-card-foreground">
-          <CardHeader>
-            <CardTitle>Hospital Information</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p><span className="font-semibold text-primary">Name:</span> <span className="text-secondary-foreground">{hospital.name}</span></p>
-            <p><span className="font-semibold text-primary">Address:</span> <span className="text-secondary-foreground">{hospital.address}</span></p>
-            <p><span className="font-semibold text-primary">Phone:</span> <span className="text-secondary-foreground">{hospital.phone}</span></p>
-            <p><span className="font-semibold text-primary">Email:</span> <span className="text-secondary-foreground">{hospital.email}</span></p>
-            <p><span className="font-semibold text-primary">Capacity:</span> <span className="text-secondary-foreground">{hospital.capacity || "N/A"}</span></p>
-            <p><span className="font-semibold text-primary">Specialties:</span> <span className="text-secondary-foreground">{hospital.specialties?.join(", ") || "N/A"}</span></p>
-            <p><span className="font-semibold text-primary">Status:</span> <span className="text-secondary-foreground">{hospital.status}</span></p>
-            <p><span className="font-semibold text-primary">Submitted By:</span> <span className="text-secondary-foreground">{hospital.submittedBy}</span></p>
-            <p><span className="font-semibold text-primary">Created At:</span> <span className="text-secondary-foreground">{hospital.createdAt ? formatDate(hospital.createdAt) : "N/A"}</span></p>
-            <p><span className="font-semibold text-primary">Updated At:</span> <span className="text-secondary-foreground">{hospital.updatedAt ? formatDate(hospital.updatedAt) : "N/A"}</span></p>
-          </CardContent>
-        </Card>
-      )}
     </div>
   );
 };
