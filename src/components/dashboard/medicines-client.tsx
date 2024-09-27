@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { fetchMedicines } from "@/actions/dashboard/fetch-medicine";
-import { getHospitalById } from "@/actions/dashboard/get-hospital-by-id";
+import { fetchHospitals } from "@/actions/dashboard/fetch-hospitals";
 import { MedicineSearch } from "./medicine-search";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,7 @@ type Medicine = {
   genericName: string;
   stock: number;
   expirationDate: Date;
+  hospitalId: string;
 };
 
 interface Hospital {
@@ -33,31 +34,31 @@ interface Hospital {
 
 const MedicinesClient = () => {
   const [medicines, setMedicines] = useState<Medicine[]>([]);
-  const [hospital, setHospital] = useState<Hospital | null>(null);
+  const [hospitals, setHospitals] = useState<Hospital[]>([]);
   const router = useRouter();
 
   useEffect(() => {
-    const loadMedicines = async () => {
-      const data = await fetchMedicines();
-      const formattedData = data.map((medicine: any) => ({
-        ...medicine,
-        genericName: medicine.genericName || "",
-        expirationDate: new Date(medicine.expirationDate),
-      }));
-      setMedicines(formattedData);
-      if (formattedData.length > 0) {
-        const hospitalData = await getHospitalById(
-          formattedData[0]?.hospitalId
-        );
-        setHospital(hospitalData[0]);
+    const loadData = async () => {
+      try {
+        const [medicinesData, hospitalsData] = await Promise.all([
+          fetchMedicines(),
+          fetchHospitals(),
+        ]);
+
+        const formattedMedicines = medicinesData.map((medicine: any) => ({
+          ...medicine,
+          genericName: medicine.genericName || "",
+          expirationDate: new Date(medicine.expirationDate),
+        }));
+
+        setMedicines(formattedMedicines);
+        setHospitals(hospitalsData);
+      } catch (error) {
+        console.error("Error loading data:", error);
       }
     };
-    loadMedicines();
+    loadData();
   }, []);
-
-  const formatDate = (date: Date) => {
-    return date.toLocaleDateString();
-  };
 
   return (
     <div className="container mx-auto py-8">
@@ -67,7 +68,7 @@ const MedicinesClient = () => {
           <Link href="/dashboard/add-medicine">Add Medicine</Link>
         </Button>
       </div>
-      <Card className="bg-card text-card-foreground">
+      <Card className="bg-card text-card-foreground mb-6">
         <CardHeader>
           <CardTitle>Search Medicines</CardTitle>
         </CardHeader>
