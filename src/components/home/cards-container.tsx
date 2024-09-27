@@ -59,20 +59,13 @@ const CardsWrapper = () => {
 
   return (
     <section className="container w-full mx-auto">
-      {/* Display dashboard stats */}
-      {dashboardData && (
-        <div className="flex items-center w-full justify-between mx-auto mb-10">
-          <p>Total Hospitals: {dashboardData.totalHospitals}</p>
-          <p>Total Medicines: {dashboardData.totalMedicines}</p>
-          <p>Low Stock Alerts: {dashboardData.lowStockAlerts}</p>
-          <p>Unapproved Hospitals: {dashboardData.unapprovedHospitals}</p>
-        </div>
-      )}
-
-      <div className="flex flex-wrap justify-center gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mx-auto mb-20">
         {hospitals &&
           hospitals.map((hospital) => (
-            <Card key={hospital.id} className="max-w-xs w-full">
+            <Card
+              key={hospital.id}
+              className="w-full mx-auto"
+            >
               <CardHeader>
                 <CardTitle>{hospital.name}</CardTitle>
                 <CardDescription>{hospital.address}</CardDescription>
