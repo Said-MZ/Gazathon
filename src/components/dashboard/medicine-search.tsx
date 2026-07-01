@@ -12,7 +12,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
-import { Hospital } from "./hospitals-client";
 import { cn } from "@/lib/utils";
 import { TriangleAlertIcon } from "lucide-react";
 
@@ -43,17 +42,19 @@ export function MedicineSearch({ medicines }: MedicineSearchProps) {
     );
   }, [medicines, debouncedSearchTerm]);
 
+  const hasLowStock = medicines.some(
+    (medicine) => medicine.minStock !== null && medicine.stock < medicine.minStock
+  );
+
   return (
     <div>
-      {medicines[0] < medicines[0]
-        ? "Low"
-        : "OK" && (
-            <div className="fixed top-24 right-4">
-              <span className="bg-red-700 text-red-200 p-2 rounded-md flex items-center gap-2">
-                <TriangleAlertIcon className="w-4 h-4" /> Low Stock
-              </span>
-            </div>
-          )}
+      {hasLowStock && (
+        <div className="fixed top-24 right-4">
+          <span className="bg-red-700 text-red-200 p-2 rounded-md flex items-center gap-2">
+            <TriangleAlertIcon className="w-4 h-4" /> Low Stock
+          </span>
+        </div>
+      )}
       <Input
         type="text"
         placeholder="Search medicines..."

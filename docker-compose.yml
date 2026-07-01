@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: gazadon
+    ports:
+      - "5432:5432"
+    volumes:
+      - gazadon-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d gazadon"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/gazadon
+      AUTH_SECRET: dev-only-change-me-dev-only-change-me
+      WEBSITE_URL: http://localhost:3000
+      RESEND_API_KEY: dev-only-not-used-for-local-demo
+      GOOGLE_CLIENT_ID: ""
+      GOOGLE_CLIENT_SECRET: ""
+      GITHUB_CLIENT_ID: ""
+      GITHUB_CLIENT_SECRET: ""
+    ports:
+      - "3000:3000"
+
+volumes:
+  gazadon-postgres:
