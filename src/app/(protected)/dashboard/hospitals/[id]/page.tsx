@@ -20,54 +20,23 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { currentRole, currentUser } from "@/actions/auth/current-user";
-import { getUserById } from "@/lib/data/user";
-import { db } from "@/db";
-import { Hospital } from "@/db/schema";
-import { eq } from "drizzle-orm";
 
-type Hospital = {
-  status: "pending" | "approved" | "rejected" | null;
-  address: string;
-  name: string;
-  phone: string;
-  email: string;
-  capacity: number | null;
-  specialties: string[] | null;
-  submittedBy: string | null;
-  createdAt: Date | null;
-  updatedAt: Date | null;
-}[];
+type HospitalRecord = Awaited<ReturnType<typeof getHospitalById>>[number];
+
+const statusColors: Record<NonNullable<HospitalRecord["status"]>, string> = {
+  pending: "bg-yellow-100 text-yellow-800 dark:bg-yellow-950 dark:text-yellow-200",
+  approved: "bg-green-100 text-green-800 dark:bg-green-950 dark:text-green-200",
+  rejected: "bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-200",
+};
 
 const HospitalPage = async ({ params }: { params: { id: string } }) => {
-  const hospital: Hospital = await getHospitalById(params.id);
-
-  const isAdmin = (await currentRole()) === "admin";
-  const user = await currentUser();
-  if (!user) {
-    return;
-  }
-  const dbUser = await getUserById(user?.id);
-
-  if (!dbUser) {
-    return;
-  }
-
-  const userHospital = await db
-    .select()
-    .from(Hospital)
-    .where(eq(Hospital.submittedBy, dbUser[0].id));
-
-  console.log(userHospital);
-
-  const showEditButton =
-    (userHospital[0].status === "pending" && isAdmin) ||
-    userHospital[0].id === params.id;
+  const [hospital] = await getHospitalById(params.id);
 
   if (!hospital) {
     return (
-      <div className="flex items-center justify-center h-screen">
+      <div className="flex min-h-[60vh] items-center justify-center">
         <Card className="w-full max-w-md">
-          <CardContent className="text-center py-10">
+          <CardContent className="py-10 text-center">
             <h1 className="text-2xl font-bold text-foreground">
               Hospital not found
             </h1>
@@ -83,98 +52,92 @@ const HospitalPage = async ({ params }: { params: { id: string } }) => {
     );
   }
 
-  const {
-    name,
-    address,
-    phone,
-    email,
-    capacity,
-    specialties,
-    submittedBy,
-    createdAt,
-    updatedAt,
-    status,
-  } = hospital[0];
-
-  const statusColors = {
-    pending: "bg-yellow-100 text-yellow-800",
-    approved: "bg-green-100 text-green-800",
-    rejected: "bg-red-100 text-red-800",
-  };
+  const [role, user] = await Promise.all([currentRole(), currentUser()]);
+  const isAdmin = role === "admin";
+  const showEditButton = isAdmin || hospital.submittedBy === user?.id;
+  const status = hospital.status ?? "pending";
 
   return (
-    <main className="container mx-auto p-4 max-w-4xl">
+    <main className="container mx-auto max-w-4xl p-4">
       <Card className="mt-4 shadow-lg">
         <CardHeader>
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <CardTitle className="text-3xl font-bold text-foreground">
-                {name}
+                {hospital.name}
               </CardTitle>
               <CardDescription className="text-lg text-muted-foreground">
-                {address}
+                {hospital.address}
               </CardDescription>
             </div>
             <Badge
-              className={`text-sm font-semibold px-3 py-1 rounded-full ${
-                statusColors[status || "pending"]
+              className={`rounded-full px-3 py-1 text-sm font-semibold ${
+                statusColors[status]
               }`}
             >
-              {status || "Unknown"}
+              {status}
             </Badge>
           </div>
         </CardHeader>
-        <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <CardContent className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div className="space-y-4">
             <div className="flex items-center">
-              <PhoneIcon className="w-5 h-5 text-muted-foreground mr-2" />
-              <span>{phone}</span>
+              <PhoneIcon className="mr-2 h-5 w-5 text-muted-foreground" />
+              <span>{hospital.phone}</span>
             </div>
             <div className="flex items-center">
-              <MailIcon className="w-5 h-5 text-muted-foreground mr-2" />
-              <span>{email}</span>
+              <MailIcon className="mr-2 h-5 w-5 text-muted-foreground" />
+              <span>{hospital.email}</span>
             </div>
             <div className="flex items-center">
-              <BedIcon className="w-5 h-5 text-muted-foreground mr-2" />
-              <span>Capacity: {capacity || "N/A"}</span>
+              <BedIcon className="mr-2 h-5 w-5 text-muted-foreground" />
+              <span>Capacity: {hospital.capacity ?? "N/A"}</span>
             </div>
           </div>
           <div className="space-y-4">
             <div>
-              <h3 className="text-lg font-semibold flex items-center">
-                <ActivityIcon className="w-5 h-5 text-muted-foreground mr-2" />
+              <h3 className="flex items-center text-lg font-semibold">
+                <ActivityIcon className="mr-2 h-5 w-5 text-muted-foreground" />
                 Specialties
               </h3>
-              <p className="mt-1">{specialties?.join(", ") || "N/A"}</p>
+              <p className="mt-1">
+                {hospital.specialties?.length
+                  ? hospital.specialties.join(", ")
+                  : "N/A"}
+              </p>
             </div>
             <div>
-              <h3 className="text-lg font-semibold flex items-center">
-                <UserIcon className="w-5 h-5 text-muted-foreground mr-2" />
+              <h3 className="flex items-center text-lg font-semibold">
+                <UserIcon className="mr-2 h-5 w-5 text-muted-foreground" />
                 Submitted By
               </h3>
-              <p className="mt-1">{submittedBy || "N/A"}</p>
+              <p className="mt-1">{hospital.submittedBy || "N/A"}</p>
             </div>
           </div>
         </CardContent>
         <CardFooter className="flex flex-col items-start space-y-2 text-sm text-muted-foreground">
           <div className="flex items-center">
-            <CalendarIcon className="w-4 h-4 mr-2" />
-            <span>Created: {createdAt?.toLocaleDateString() || "N/A"}</span>
+            <CalendarIcon className="mr-2 h-4 w-4" />
+            <span>
+              Created: {hospital.createdAt?.toLocaleDateString() || "N/A"}
+            </span>
           </div>
           <div className="flex items-center">
-            <CalendarIcon className="w-4 h-4 mr-2" />
-            <span>Updated: {updatedAt?.toLocaleDateString() || "N/A"}</span>
+            <CalendarIcon className="mr-2 h-4 w-4" />
+            <span>
+              Updated: {hospital.updatedAt?.toLocaleDateString() || "N/A"}
+            </span>
           </div>
         </CardFooter>
-        <CardFooter>
-          {showEditButton && (
+        {showEditButton && (
+          <CardFooter>
             <Button asChild className="w-full">
               <Link href={`/dashboard/hospitals/${params.id}/edit`}>
                 Edit Hospital Details
               </Link>
             </Button>
-          )}
-        </CardFooter>
+          </CardFooter>
+        )}
       </Card>
     </main>
   );

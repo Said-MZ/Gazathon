@@ -1,13 +1,16 @@
 import NextAuth from "next-auth";
+import Credentials from "next-auth/providers/credentials";
+import bcrypt from "bcryptjs";
 import authConfig from "./auth.config";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "@/db";
-import { getUserById } from "@/lib/data/user";
+import { getUserByEmail, getUserById } from "@/lib/data/user";
 import { twoFactorConfirmation, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { getTwoFactorConfirmationByUserID } from "@/lib/data/two-factor-confirmation";
 import { revalidatePath } from "next/cache";
 import { getAccountByUserId } from "@/actions/auth/account";
+import { loginSchema } from "@/zod";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   pages: {
@@ -61,7 +64,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       }
 
       if (session.user) {
-        console.log("session.user", session.user);
         session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
         session.user.email = token.email as string;
         session.user.name = token.name as string;
@@ -91,4 +93,27 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   adapter: DrizzleAdapter(db),
   session: { strategy: "jwt" },
   ...authConfig,
+  providers: [
+    ...authConfig.providers,
+    Credentials({
+      async authorize(credentials) {
+        const validatedFields = loginSchema.safeParse(credentials);
+
+        if (!validatedFields.success) {
+          return null;
+        }
+
+        const { email, password } = validatedFields.data;
+        const user = await getUserByEmail(email);
+
+        if (!user?.[0]?.password) {
+          return null;
+        }
+
+        const passwordsMatch = await bcrypt.compare(password, user[0].password);
+
+        return passwordsMatch ? user[0] : null;
+      },
+    }),
+  ],
 });

@@ -77,8 +77,8 @@ export function AddMedicineForm() {
       try {
         const hospitalData = await fetchHospitals();
         setHospitals(hospitalData);
-      } catch (error) {
-        console.error("Failed to load hospitals", error);
+      } catch {
+        setSubmitError("Failed to load hospitals. Please refresh the page.");
       }
     };
     loadHospitals();
@@ -92,7 +92,8 @@ export function AddMedicineForm() {
       form.reset();
       toast.success("Medicine added successfully");
       router.push("/dashboard/medicines");
-    } catch (error) {
+    } catch {
+      setSubmitError("Failed to add medicine. Please try again.");
       toast.error("Failed to add medicine. Please try again.");
       form.setError("hospitalId", {
         message: "Failed to add medicine. Please try again.",
@@ -188,7 +189,7 @@ export function AddMedicineForm() {
                   <Input
                     type="number"
                     {...field}
-                    onChange={(e) => field.onChange(parseFloat(e.target.value))}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
                   />
                 </FormControl>
                 <FormMessage />
@@ -205,7 +206,7 @@ export function AddMedicineForm() {
                   <Input
                     type="number"
                     {...field}
-                    onChange={(e) => field.onChange(parseInt(e.target.value))}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
                   />
                 </FormControl>
                 <FormMessage />
@@ -222,7 +223,7 @@ export function AddMedicineForm() {
                   <Input
                     type="number"
                     {...field}
-                    onChange={(e) => field.onChange(parseInt(e.target.value))}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
                   />
                 </FormControl>
                 <FormMessage />
@@ -286,7 +287,7 @@ export function AddMedicineForm() {
         />
 
         {submitError && <p className="text-red-500">{submitError}</p>}
-        <Button type="submit" disabled={isSubmitting}>
+        <Button type="submit" disabled={isSubmitting || Boolean(submitError && hospitals.length === 0)}>
           {isSubmitting ? "Adding..." : "Add Medicine"}
         </Button>
       </form>

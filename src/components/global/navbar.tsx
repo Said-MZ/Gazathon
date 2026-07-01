@@ -11,9 +11,8 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { ArrowRight, Heart, MoveRight, PhoneCall } from "lucide-react";
+import { ArrowRight, Heart, MoveRight } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 type SubItem = {
@@ -174,7 +173,7 @@ const Navbar: React.FC = () => {
               className="py-2"
             /> */}
             <h2 className="text-2xl font-bold">
-              Gaza<span className="text-primary">Find</span>
+              Gaza<span className="text-primary">Don</span>
             </h2>
           </Link>
         </div>

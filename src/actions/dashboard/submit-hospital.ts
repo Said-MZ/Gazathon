@@ -1,19 +1,21 @@
-// actions/dashboard/submit-hospital.ts
 "use server";
 
 import { db } from "@/db";
 import { Hospital, users } from "@/db/schema";
 import { currentUser } from "@/actions/auth/current-user";
 import { eq } from "drizzle-orm";
+import { z } from "zod";
 
-interface HospitalSubmission {
-  name: string;
-  address: string;
-  phone: string;
-  email: string;
-  capacity: number;
-  specialties?: string;
-}
+const hospitalSubmissionSchema = z.object({
+  name: z.string().trim().min(1, "Hospital name is required"),
+  address: z.string().trim().min(1, "Address is required"),
+  phone: z.string().trim().min(1, "Phone number is required"),
+  email: z.string().trim().email("Invalid email address"),
+  capacity: z.number().int().min(1, "Capacity must be at least 1"),
+  specialties: z.string().optional(),
+});
+
+type HospitalSubmission = z.infer<typeof hospitalSubmissionSchema>;
 
 export async function submitHospital(data: HospitalSubmission) {
   const user = await currentUser();
@@ -21,16 +23,23 @@ export async function submitHospital(data: HospitalSubmission) {
     throw new Error("User not authenticated");
   }
 
-  // Insert the hospital with a pending status
+  const validatedData = hospitalSubmissionSchema.parse(data);
+  const specialties = validatedData.specialties
+    ? validatedData.specialties
+        .split(",")
+        .map((specialty) => specialty.trim())
+        .filter(Boolean)
+    : [];
+
   const hospital = await db
     .insert(Hospital)
     .values({
-      ...data,
-      status: "pending",
+      ...validatedData,
+      specialties,
+      status: user.role === "admin" ? "approved" : "pending",
       submittedBy: user.id,
-      specialties: data.specialties
-        ? data.specialties.split(",").map((s) => s.trim())
-        : [],
+      createdAt: new Date(),
+      updatedAt: new Date(),
     })
     .returning({
       id: Hospital.id,

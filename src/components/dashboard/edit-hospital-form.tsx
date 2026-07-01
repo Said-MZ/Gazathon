@@ -73,7 +73,7 @@ export function EditHospitalForm({ hospitalId }: EditHospitalFormProps) {
           capacity: hospitalData.capacity ?? 0,
           specialties: hospitalData.specialties?.join(", ") || "",
         });
-      } catch (error) {
+      } catch {
         setError("Failed to load hospital data");
       } finally {
         setIsLoading(false);
@@ -94,7 +94,8 @@ export function EditHospitalForm({ hospitalId }: EditHospitalFormProps) {
           : [],
       });
       toast.success("Hospital updated successfully");
-    } catch (error) {
+    } catch {
+      setError("Failed to update hospital. Please try again.");
       toast.error("Failed to update hospital. Please try again.");
     } finally {
       setIsSubmitting(false);
@@ -169,7 +170,7 @@ export function EditHospitalForm({ hospitalId }: EditHospitalFormProps) {
                 <Input
                   type="number"
                   {...field}
-                  onChange={(e) => field.onChange(parseInt(e.target.value))}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
                 />
               </FormControl>
               <FormMessage />
