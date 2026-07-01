@@ -69,8 +69,6 @@ export const login = async (values: z.infer<typeof loginSchema>) => {
         return { error: "Two factor code has expired" };
       }
 
-      // console.log(TFAToken[0]);
-
       await db
         .delete(twoFactorToken)
         .where(eq(twoFactorToken.id, TFAToken[0].id));

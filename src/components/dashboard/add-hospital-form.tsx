@@ -52,7 +52,8 @@ export function AddHospitalForm() {
       await submitHospital(data);
       form.reset();
       toast.success("Hospital added successfully");
-    } catch (error) {
+    } catch {
+      setSubmitError("Failed to submit hospital. Please try again.");
       toast.error("Failed to submit hospital. Please try again.");
     } finally {
       setIsSubmitting(false);
@@ -129,7 +130,7 @@ export function AddHospitalForm() {
                   placeholder="Enter hospital capacity"
                   type="number"
                   {...field}
-                  onChange={(e) => field.onChange(parseInt(e.target.value))}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
                 />
               </FormControl>
               <FormMessage />

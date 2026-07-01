@@ -62,8 +62,6 @@ export const settings = async (data: z.infer<typeof SettingsSchema>) => {
     data.password = hashedPassword;
 
     data.newPassword = undefined;
-
-    return { success: "Password Updated!" };
   }
 
   await db
@@ -77,5 +75,5 @@ export const settings = async (data: z.infer<typeof SettingsSchema>) => {
     })
     .where(eq(users.id, user.id));
 
-  return { success: "Settings Updated!  " };
+  return { success: "Settings updated!" };
 };

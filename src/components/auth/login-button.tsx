@@ -24,7 +24,11 @@ const LoginButton = ({
   };
 
   if (mode === Mode.Modal) {
-    return <span>TODO: Add modal</span>;
+    return (
+      <span onClick={onClick} className="cursor-pointer">
+        {children}
+      </span>
+    );
   }
   return (
     <span onClick={onClick} className="cursor-pointer">

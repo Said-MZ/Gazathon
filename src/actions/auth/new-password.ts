@@ -30,7 +30,7 @@ export const newPassword = async (
     return { error: "Invalid or expired token" };
   }
 
-  if (pToken[0]?.expires! < new Date()) {
+  if (!pToken[0].expires || pToken[0].expires < new Date()) {
     return { error: "Token expired" };
   }
 
@@ -39,7 +39,7 @@ export const newPassword = async (
     .from(users)
     .where(eq(users.email, pToken[0].email!));
 
-  if (!existingUser) {
+  if (!existingUser || existingUser.length === 0) {
     return { error: "User not found" };
   }
 

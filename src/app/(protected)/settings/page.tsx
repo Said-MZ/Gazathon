@@ -37,8 +37,6 @@ import { useSession } from "next-auth/react";
 const SettingsPage = () => {
   const { update } = useSession();
   const user = useCurrentUser();
-  console.log(user?.isOAuth);
-
   const [error, setError] = useState<string | undefined>(undefined);
   const [success, setSuccess] = useState<string | undefined>(undefined);
 
@@ -205,7 +203,7 @@ const SettingsPage = () => {
                   name="isTwoFactorEnabled"
                   control={form.control}
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-center justify-between p-3 shadow-sm rounded-lh">
+                    <FormItem className="flex flex-row items-center justify-between rounded-lg p-3 shadow-sm">
                       <div className="space-y-0.5">
                         <FormLabel>Two Factor Authentication</FormLabel>
                         <FormDescription>

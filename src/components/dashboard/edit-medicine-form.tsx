@@ -28,6 +28,8 @@ import {
   updateMedicine,
   fetchHospitals,
 } from "@/actions/dashboard/manage-medicines";
+import { toast } from "sonner";
+import Spinner from "@/components/ui/spinner";
 
 const medicineSchema = z.object({
   id: z.string(),
@@ -103,7 +105,7 @@ export function EditMedicineForm({ medicineId }: EditMedicineFormProps) {
           hospitalId: medicineData.hospitalId ?? "",
         });
         setHospitals(hospitalData);
-      } catch (error) {
+      } catch {
         setError("Failed to load data");
       } finally {
         setIsLoading(false);
@@ -118,15 +120,15 @@ export function EditMedicineForm({ medicineId }: EditMedicineFormProps) {
     setError(null);
     try {
       await updateMedicine(data);
-      // Show success message or redirect
-    } catch (error) {
+      toast.success("Medicine updated successfully");
+    } catch {
       setError("Failed to update medicine. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Spinner />;
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (
@@ -215,7 +217,7 @@ export function EditMedicineForm({ medicineId }: EditMedicineFormProps) {
                   <Input
                     type="number"
                     {...field}
-                    onChange={(e) => field.onChange(parseFloat(e.target.value))}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
                   />
                 </FormControl>
                 <FormMessage />
@@ -232,7 +234,7 @@ export function EditMedicineForm({ medicineId }: EditMedicineFormProps) {
                   <Input
                     type="number"
                     {...field}
-                    onChange={(e) => field.onChange(parseInt(e.target.value))}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
                   />
                 </FormControl>
                 <FormMessage />
@@ -249,7 +251,7 @@ export function EditMedicineForm({ medicineId }: EditMedicineFormProps) {
                   <Input
                     type="number"
                     {...field}
-                    onChange={(e) => field.onChange(parseInt(e.target.value))}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
                   />
                 </FormControl>
                 <FormMessage />
