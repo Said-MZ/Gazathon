@@ -1,13 +1,13 @@
 "use client";
 
 import useCurrentRole from "@/hooks/use-current-role";
-interface adminGateProps {
+interface AdminGateProps {
   children: React.ReactNode;
   allowedRoles: "admin" | "user";
   error?: React.ReactNode | null;
 }
 
-const adminGate = ({ children, allowedRoles, error }: adminGateProps) => {
+const AdminGate = ({ children, allowedRoles, error }: AdminGateProps) => {
   const role = useCurrentRole();
 
   if (role !== allowedRoles) {
@@ -17,4 +17,4 @@ const adminGate = ({ children, allowedRoles, error }: adminGateProps) => {
   return <>{children}</>;
 };
 
-export default adminGate;
+export default AdminGate;

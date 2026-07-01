@@ -4,7 +4,6 @@ import { admin } from "@/actions/auth/admin";
 import FormSuccess from "@/components/auth/form-success";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import useCurrentRole from "@/hooks/use-current-role";
 import { toast } from "sonner";
 import AdminGate from "@/components/auth/admin-gate";
 import FormError from "@/components/auth/form-error";
@@ -21,15 +20,13 @@ const AdminPage = () => {
   };
 
   const onAPIRouteClick = async () => {
-    const response = await fetch("/api/admin").then((res) => {
+    await fetch("/api/admin").then((res) => {
       if (!res.ok) {
         toast.error("You are not authorized");
         return;
       }
       toast.success("Success");
-      console.log(res);
     });
-    console.log(response);
   };
 
   return (

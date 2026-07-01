@@ -19,8 +19,8 @@ export const generateTwoFactorToken = async (email: string) => {
 
   if (existingToken && existingToken.length > 0) {
     await db
-      .delete(verificationToken)
-      .where(eq(verificationToken.id, existingToken[0].id));
+      .delete(twoFactorToken)
+      .where(eq(twoFactorToken.id, existingToken[0].id));
   }
 
   const TFAToken = await db
@@ -73,8 +73,8 @@ export const generatePasswordResetToken = async (email: string) => {
 
   if (existingToken && existingToken.length > 0) {
     await db
-      .delete(verificationToken)
-      .where(eq(verificationToken.email, email));
+      .delete(passwordResetToken)
+      .where(eq(passwordResetToken.email, email));
   }
 
   const pToken = await db
